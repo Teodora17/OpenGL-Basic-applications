@@ -16,21 +16,21 @@
 
 #include "shader.hpp"
 
-//We need that randomness
+// We need that randomness
 #include <ctime> 
 
-//variables
+// variables
 GLFWwindow* window;
 const int width = 1024, height = 768;
 
-void drawCircle(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLint numberOfSides); //function for drawing circle not working atm when combined with the other 2. On empty window it works
-//TODO: fix circle drawing
+void drawCircle(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLint numberOfSides); // function for drawing circle not working atm when combined with the other 2. On empty window it works
+// TODO: fix circle drawing
 // init camera params
 
 glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 200.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-//^ Camera vectors.
+// ^ Camera vectors.
 
 void kill_self(GLuint& vao, GLuint& vbo, GLuint programID)
 {
@@ -50,15 +50,15 @@ float rand_z;
 GLuint programID;
 glm::mat4 MVP;
 unsigned int transformLoc;
-//glm::mat4 model;
+// glm::mat4 model;
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
 	int pixel[4];
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 	{
-		//green_change = 1.0f;
-		//transf = glm::rotate(transf, 0.0f, glm::vec3(0.0, 0.0, 1.0));
+		// green_change = 1.0f;
+		// transf = glm::rotate(transf, 0.0f, glm::vec3(0.0, 0.0, 1.0));
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
 		glReadPixels(xpos, ypos, 1, 1, GL_RED, GL_UNSIGNED_BYTE, &pixel);
@@ -101,17 +101,17 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		float timer = glfwGetTime();
 		glUseProgram(programID);
 		MVP = glm::rotate(MVP, 45.0f, glm::vec3(0, 0, 1));
-		//unsigned int transformLoc = glGetUniformLocation(programID, "transform");
-		//glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(MVP));
+		// unsigned int transformLoc = glGetUniformLocation(programID, "transform");
+		// glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(MVP));
 	}
 }
 
-float rand_gen() { //generate num between -1 and 1
+float rand_gen() { // generate num between -1 and 1
 	float dec = ((float)rand() / RAND_MAX);
 	if ((rand() % (10) % 2 == 0)) {
 		dec = -dec;
 	}
-	//std::cout << "TESTRAND-" << dec << "\n";
+	// std::cout << "TESTRAND-" << dec << "\n";
 	return dec;
 }
 
@@ -146,7 +146,7 @@ int main(void)
 		return -1;
 	}
 
-	//specify the size of the rendering window
+	// specify the size of the rendering window
 	glViewport(0, 0, width, height);
 
 	// Dark blue background
@@ -157,7 +157,7 @@ int main(void)
 	// More about this in the following labs
 	programID = LoadShaders("SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader");
 
-	float g_vertex_buffer_data2[] = {	//decagon
+	float g_vertex_buffer_data2[] = {	// decagon
 	0.0f,0.0f,0.0f,
 	0.0f,0.5f,0.0f,
 	0.294f,0.405f,0.0f,
@@ -184,7 +184,7 @@ int main(void)
 		0, 10, 1
 	};
 
-	float g_vertex_buffer_data[] = {	//square
+	float g_vertex_buffer_data[] = {	// square
 		-0.5f,-0.5f,0.0f,
 		0.5f,-0.5f,0.0f,
 		0.5f,0.5f,0.0f,
@@ -194,7 +194,7 @@ int main(void)
 	unsigned int indices[] = {  // note that we start from 0!
 		0, 1, 2, 3
 	};
-	float g_vertex_buffer_data1[] = {	//triangle
+	float g_vertex_buffer_data1[] = {	// triangle
 		0.0f,0.5f,0.0f,
 		0.5f,-0.5f,0.0f,
 		-0.5f,-0.5f,0.0f
@@ -218,20 +218,20 @@ int main(void)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices2), indices2, GL_STATIC_DRAW);
 
-	//set attribute pointers
+	// set attribute pointers
 	glVertexAttribPointer(
 		0,                  // attribute 0, must match the layout in the shader.
 		3,                  // size of each attribute
 		GL_FLOAT,           // type
 		GL_FALSE,           // normalized?
-		3 * sizeof(float),                  // stride
+		3 * sizeof(float),  // stride
 		(void*)0            // array buffer offset
 	);
 	glEnableVertexAttribArray(0);
 
-	//MOUSE CONTROLS DISABLED FOR EX1
+	// MOUSE CONTROLS DISABLED FOR EX1
 
-	drawStage = 1; //drawing has 4 stages. 1. Nothing is being drawn, 2. Draw Square, 3. Draw triangle, 4. Draw circle
+	drawStage = 1; // drawing has 4 stages. 1. Nothing is being drawn, 2. Draw Square, 3. Draw triangle, 4. Draw circle
 	rand_x = 0;
 	rand_y = 0;
 	rand_z = 0;
@@ -284,7 +284,7 @@ int main(void)
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices2), indices2, GL_STATIC_DRAW);
 
 		}
-		//^ Switch buffers
+		// ^ Switch buffers
 		if (glfwGetKey(window, GLFW_KEY_4) || glfwGetKey(window, GLFW_KEY_3) || glfwGetKey(window, GLFW_KEY_2)) {
 			if (lastStage != drawStage) {
 				rand_x = rand_gen();
@@ -294,7 +294,7 @@ int main(void)
 			}
 
 		}
-		//^ Pick random position if we change drawing mode
+		// ^ Pick random position if we change drawing mode
 
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -305,7 +305,7 @@ int main(void)
 		glm::mat4 model;
 
 		model = glm::translate(model, glm::vec3(rand_x, rand_y, rand_z));
-		//^ Translate to random point
+		// ^ Translate to random point
 
 		glm::mat4 view;
 
@@ -323,7 +323,7 @@ int main(void)
 		transformLoc = glGetUniformLocation(programID, "transform");
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(MVP));
 
-		//bind VAO
+		// bind VAO
 		glBindVertexArray(vao);
 		if (drawStage == 2) {
 			glDrawElements(GL_POLYGON, 4, GL_UNSIGNED_INT, 0);
@@ -350,5 +350,3 @@ int main(void)
 	}
 	return 0;
 }
-
-
